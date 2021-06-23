@@ -1,0 +1,8 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "": [{
+      "model": "the_deeps:block/frame"
+    }]
+  }
+}

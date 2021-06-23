@@ -36,7 +36,7 @@ public class TheDeepsMod
 
     private static final RegistryObject<Item> DUMMY_BLOCK_ITEM = ITEMS.register("thicc", () -> new BlockItem(TheDeepsBlocks.DUMMY_BLOCK.get(), new BlockItem.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)));
 
-
+    private static final RegistryObject<Item> Dummy_FRAME_ITEM = ITEMS.register("frame", () -> new BlockItem(TheDeepsBlocks.Frame_Block.get(), new BlockItem.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)));
 
     public TheDeepsMod() {
         // Register the setup method for modloading
