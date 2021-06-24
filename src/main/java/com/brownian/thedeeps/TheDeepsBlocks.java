@@ -10,4 +10,5 @@ public class TheDeepsBlocks {
     //TODO: make a @DropsItem annotation which generates the loot_table for us!
     static final RegistryObject<Block> DUMMY_BLOCK = BLOCKS.register("thicc", DummyThiccBlock::new);
     static final RegistryObject<Block> Frame_Block = BLOCKS.register("frame", DummyFrameBlock::new);
+    static final RegistryObject<Block> DUMMY_PORTAL = BLOCKS.register("deeps_portal", DeepsPortalBlock::new);
 }
