@@ -2,22 +2,13 @@ package com.brownian.thedeeps;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,12 +22,6 @@ public class TheDeepsMod
 
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
-
-    private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-
-    private static final RegistryObject<Item> DUMMY_BLOCK_ITEM = ITEMS.register("thicc", () -> new BlockItem(TheDeepsBlocks.DUMMY_BLOCK.get(), new BlockItem.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)));
-
-    private static final RegistryObject<Item> Dummy_FRAME_ITEM = ITEMS.register("frame", () -> new BlockItem(TheDeepsBlocks.Frame_Block.get(), new BlockItem.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)));
 
     public TheDeepsMod() {
         // Register the setup method for modloading
@@ -52,7 +37,7 @@ public class TheDeepsMod
         MinecraftForge.EVENT_BUS.register(this);
 
         TheDeepsBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
-        ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        TheDeepsBlockItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     private void setup(final FMLCommonSetupEvent event)
