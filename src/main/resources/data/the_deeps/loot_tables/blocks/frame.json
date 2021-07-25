@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "the_deeps:blocks/frame"
+          "name": "the_deeps:block/frame"
         }
       ],
       "conditions": [
