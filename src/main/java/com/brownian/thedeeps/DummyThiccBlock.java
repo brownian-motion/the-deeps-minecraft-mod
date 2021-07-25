@@ -1,11 +1,10 @@
 package com.brownian.thedeeps;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
+import net.minecraft.block.Blocks;
 
 class DummyThiccBlock extends Block {
     public DummyThiccBlock() {
-        super(Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE));
+        super(Properties.copy(Blocks.STONE));
     }
 }
