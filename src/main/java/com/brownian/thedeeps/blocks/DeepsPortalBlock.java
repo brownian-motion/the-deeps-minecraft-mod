@@ -14,12 +14,19 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import static com.brownian.thedeeps.TheDeepsMod.MODID;
 
 /**
  * Defines the actual pane making up the portal interior,
@@ -35,11 +42,8 @@ public class DeepsPortalBlock extends BreakableBlock {
 
     public static boolean trySpawnPortal(IWorld level, BlockPos framePos) {
         val maybePortalFrame =
-                Stream.of(Direction.Axis.Z, Direction.Axis.X)
-                        .map(axis -> PortalFrame.findPortalFrameAt(level, framePos, axis))
-                        .filter(Objects::nonNull)
-                        .filter(PortalFrame::isValidSize)
-                        .findAny();
+                Optional.ofNullable(PortalFrame.findPortalFrameAt(level, framePos))
+                        .filter(PortalFrame::isValidSize);
 
         maybePortalFrame.ifPresent(portalFrame -> {
             // TODO: the Undergarden publishes an event here. Should we do the same?
@@ -66,6 +70,14 @@ public class DeepsPortalBlock extends BreakableBlock {
         private final @NonNull BlockPos bottomLeft; // is either empty or contains a portal block
         private final int height;
         private final int width;
+
+        @Nullable
+        public static PortalFrame findPortalFrameAt(IWorld world, BlockPos pos) {
+            return Stream.of(Direction.Axis.X, Direction.Axis.Z)
+                    .map(axis -> findPortalFrameAt(world, pos, axis))
+                    .filter(Objects::nonNull)
+                    .findAny().orElse(null);
+        }
 
         @Nullable
         public static PortalFrame findPortalFrameAt(IWorld world, BlockPos pos, Direction.Axis axisIn) {
@@ -161,6 +173,10 @@ public class DeepsPortalBlock extends BreakableBlock {
             ));
         }
 
+        public void breakPortalBlocks() {
+            forEachBlockWithinFrame(blockPos -> this.world.destroyBlock(blockPos, true));
+        }
+
         /**
          * Validates the actual blocks forming the portal frame.
          */
@@ -206,6 +222,23 @@ public class DeepsPortalBlock extends BreakableBlock {
                         .mapToObj(dRight -> rowStart.relative(right, dRight))
                         .map(world::getBlockState)
                         .allMatch(blockState -> blockState.is(portalFrameBlock));
+            }
+        }
+    }
+
+    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+    public static class Events {
+        @SubscribeEvent
+        public static void onBreakEvent(BlockEvent.BreakEvent breakEvent) {
+            BlockState blockState = breakEvent.getState();
+            if (blockState.is(TheDeepsBlocks.DUMMY_PORTAL.get()) || blockState.is(TheDeepsBlocks.Frame_Block.get())) {
+                Arrays.stream(Direction.values())
+                        .map(breakEvent.getPos()::relative)
+                        .map(pos -> PortalFrame.findPortalFrameAt(breakEvent.getWorld(), pos))
+                        .filter(Objects::nonNull)
+                        .filter(PortalFrame::isValidSize)
+                        .findAny()
+                        .ifPresent(PortalFrame::breakPortalBlocks);
             }
         }
     }
