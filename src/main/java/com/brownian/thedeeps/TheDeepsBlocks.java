@@ -1,5 +1,8 @@
 package com.brownian.thedeeps;
 
+import com.brownian.thedeeps.blocks.DeepsPortalBlock;
+import com.brownian.thedeeps.blocks.DummyFrameBlock;
+import com.brownian.thedeeps.blocks.DummyThiccBlock;
 import net.minecraft.block.Block;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;

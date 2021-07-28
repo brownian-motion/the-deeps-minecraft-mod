@@ -1,4 +1,4 @@
-package com.brownian.thedeeps;
+package com.brownian.thedeeps.blocks;
 
 import lombok.AccessLevel;
 import lombok.NonNull;
