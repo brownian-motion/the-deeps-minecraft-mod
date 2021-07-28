@@ -1,5 +1,6 @@
 package com.brownian.thedeeps.blocks;
 
+import com.brownian.thedeeps.TheDeepsBlocks;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

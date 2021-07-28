@@ -1,6 +1,6 @@
 package com.brownian.thedeeps.items;
 
-import com.brownian.thedeeps.DeepsPortalBlock;
+import com.brownian.thedeeps.blocks.DeepsPortalBlock;
 import lombok.NonNull;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
