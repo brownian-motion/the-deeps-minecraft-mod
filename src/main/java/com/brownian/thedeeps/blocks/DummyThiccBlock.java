@@ -1,9 +1,9 @@
-package com.brownian.thedeeps;
+package com.brownian.thedeeps.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 
-class DummyThiccBlock extends Block {
+public class DummyThiccBlock extends Block {
     public DummyThiccBlock() {
         super(Properties.copy(Blocks.STONE));
     }
